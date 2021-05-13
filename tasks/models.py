@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models.fields.related import ForeignKey
 
 
 class Task(models.Model):
@@ -8,8 +9,15 @@ class Task(models.Model):
         PROCESSING = 'processing'
         FINISHED = 'finished'
 
-    data = models.ForeignKey(
-        'TaskData', 
+    media = models.ForeignKey('Media', on_delete=models.CASCADE)
+    function = models.ForeignKey(
+        'AppFunction', verbose_name='function', on_delete=models.CASCADE
+    )
+    subfunction = models.ForeignKey(
+        'Subfunction', 
+        null=True,
+        blank=True,
+        verbose_name='subfunction', 
         on_delete=models.CASCADE
     )
     bot = models.ForeignKey(
@@ -19,42 +27,43 @@ class Task(models.Model):
         on_delete=models.CASCADE
     ) 
     status = models.CharField(
-        max_length=32, choices=Status.choices, default=Status.NEW)
+        max_length=32, blank=True, choices=Status.choices, default=Status.NEW
+    )
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
         db_table = 'task'
 
     def __str__(self):
-       return str(self.created_at)
+       return str(self.id)
 
 
-class TaskData(models.Model):
-    media = models.ImageField(upload_to='tasks')
-    function = models.ForeignKey(
-        'AppFunction', verbose_name='function', on_delete=models.CASCADE)
-    subfunction = models.ForeignKey(
-        'Subfunction', 
-        null=True,
-        blank=True,
-        verbose_name='subfunction', 
-        on_delete=models.CASCADE
+class Media(models.Model):
+
+    class State(models.TextChoices):
+        EDITED = 'edited'
+        UNEDITED = 'unedited'
+
+    media = models.FileField(upload_to='tasks')
+    state = models.CharField(
+        max_length=8, choices=State.choices, default=State.UNEDITED
     )
+    tags = models.CharField(
+        max_length=256, blank=True, null=True
+    )
+    uploaded_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
-        db_table = 'task_data'
+        db_table = 'media'
+        verbose_name_plural = 'media'
 
     def __str__(self):
-        return f'{self.function.app} - {self.function}'
+        return str(self.media)
 
 
 class AppFunction(models.Model):
     name = models.CharField(max_length=32, unique=True)
-    app = models.ForeignKey(
-        'App', 
-        verbose_name='app', 
-        on_delete=models.CASCADE
-    )
+    app = ForeignKey('App', on_delete=models.CASCADE)
 
     class Meta:
         db_table = 'app_function'
@@ -65,6 +74,9 @@ class AppFunction(models.Model):
 
 class Subfunction(models.Model):
     name = models.CharField(max_length=32, unique=True)
+    function = models.ForeignKey(
+        'AppFunction', null=True, on_delete=models.CASCADE
+    )
 
     class Meta:
         db_table = 'subfunction'
@@ -81,7 +93,8 @@ class Bot(models.Model):
 
     name = models.CharField(max_length=32, unique=True)
     state = models.CharField(
-        max_length=16, choices=State.choices, default=State.DISABLED)
+        max_length=8, choices=State.choices, default=State.DISABLED
+    )
 
     class Meta:
         db_table = 'bot'

@@ -18,7 +18,7 @@ class TaskSerializer(ModelSerializer):
 class AppSerializer(ModelSerializer):
     class Meta:
         model = App
-        fields = ('name',)
+        fields = ('id', 'name')
 
 
 class SubfunctionSerializer(ModelSerializer):

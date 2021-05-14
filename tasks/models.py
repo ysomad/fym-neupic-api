@@ -7,7 +7,7 @@ class Task(models.Model):
     class Status(models.TextChoices):
         NEW = 'new'
         PROCESSING = 'processing'
-        FINISHED = 'finished'
+        DONE = 'done'
 
     media = models.ForeignKey('Media', on_delete=models.CASCADE)
     function = models.ForeignKey(
@@ -43,6 +43,7 @@ class Media(models.Model):
     class State(models.TextChoices):
         EDITED = 'edited'
         UNEDITED = 'unedited'
+        TEMPLATE = 'template'
 
     media = models.FileField(upload_to='tasks')
     state = models.CharField(

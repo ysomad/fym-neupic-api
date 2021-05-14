@@ -8,7 +8,8 @@ from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 
 from .views import (
-    MediaList, MediaDetail, TaskViewSet, AppFunctionList, SubfunctionList
+    MediaViewSet, TaskViewSet, 
+    AppFunctionList, SubfunctionList, BotViewSet, AppList, BotEnabledList
 )
 
 
@@ -27,6 +28,8 @@ schema_view = get_schema_view(
 # Viewset router
 router = DefaultRouter()
 router.register(r'tasks', TaskViewSet)
+router.register(r'media', MediaViewSet)
+router.register(r'bots', BotViewSet)
 
 urlpatterns = [
     # Router
@@ -41,11 +44,10 @@ urlpatterns = [
     ),
 
     # Api endpoints
-    path('media/', MediaList.as_view(), name='media-list'),
-    path('media/<int:pk>/', MediaDetail.as_view(), name='media-detail'),
-
     path('functions/', AppFunctionList.as_view(), name='function-list'),
     path('subfunctions/', SubfunctionList.as_view(), name='subfunction-list'),
+    path('bots/enabled', BotEnabledList.as_view(), name='bot-enabled-list'),
+    path('apps/', AppList.as_view(), name='app-list'),
 ]
 
 

@@ -3,6 +3,7 @@ from rest_framework.generics import ListAPIView
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.decorators import action
 from rest_framework import status
+from rest_framework import filters
 
 from drf_yasg.utils import swagger_auto_schema
 
@@ -52,6 +53,8 @@ class TaskViewSet(ModelViewSet):
 class MediaViewSet(ModelViewSet):
     queryset = Media.objects.all()
     serializer_class = MediaSerializer
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['tags']
 
 
 class AppFunctionList(ListAPIView):

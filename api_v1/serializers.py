@@ -49,23 +49,9 @@ class SubfunctionSerializer(ModelSerializer):
         fields = ('id', 'name', 'function')
 
 
-class TaskListSerializer(ModelSerializer):
-    media = MediaSerializer(read_only=True)
-    function =  StringRelatedField()
-    subfunction = StringRelatedField()
-    bot = StringRelatedField()
-
-    class Meta:
-        model = Task
-        fields = ('id', 'status', 'media', 'function', 'subfunction', 'bot')
-
-
-class TaskDetailSerializer(ModelSerializer):
+class TaskNestedSerializer(TaskSerializer, ModelSerializer):
     media = MediaSerializer(read_only=True)
     function =  AppFunctionSerializer(read_only=True)
     subfunction = SubfunctionSerializer(read_only=True)
     bot = BotSerializer(read_only=True)
 
-    class Meta:
-        model = Task
-        fields = ('id', 'status', 'media', 'function', 'subfunction', 'bot')

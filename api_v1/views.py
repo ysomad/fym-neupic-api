@@ -1,3 +1,4 @@
+from django.db.models import query
 from django.shortcuts import get_object_or_404
 
 from rest_framework import status
@@ -7,16 +8,18 @@ from rest_framework.views import APIView
 from rest_framework.generics import (
     ListCreateAPIView, RetrieveAPIView, ListCreateAPIView, ListAPIView
 )
-from rest_framework.viewsets import ViewSet
+from rest_framework.viewsets import ViewSet, ModelViewSet
 
 from tasks.models import AppFunction, Media, Subfunction, Task
 from .serializers import (
-    AppFunctionSerializer, MediaSerializer, TaskSerializer, TaskListSerializer,
-    SubfunctionSerializer, TaskDetailSerializer
+    AppFunctionSerializer, MediaSerializer, TaskSerializer, 
+    TaskNestedSerializer, SubfunctionSerializer
 )
 
 
-class TaskList(ViewSet):
+class TaskViewSet(ModelViewSet):
+    queryset = Task.objects.all()
+    serializer_class = TaskNestedSerializer
    
     def create(self, request):
         serializer = TaskSerializer(data=request.data)
@@ -24,21 +27,6 @@ class TaskList(ViewSet):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-    def list(self, request):
-        queryset = Task.objects.all()
-        serializer = TaskListSerializer(queryset, many=True)
-        return Response(serializer.data)
-
-    def retrieve(self, request, pk=None):
-        queryset = Task.objects.all()
-        task = get_object_or_404(queryset, pk=pk)
-        serializer = TaskDetailSerializer(task)
-        return Response(serializer.data)
-    
-    def update(self, request):
-        # TODO: make possible to update tasks
-        pass
 
 
 class MediaList(ListCreateAPIView):

@@ -4,6 +4,7 @@ from rest_framework.viewsets import ModelViewSet
 from rest_framework.decorators import action
 from rest_framework import status
 from rest_framework import filters
+from rest_framework.permissions import IsAdminUser
 
 from drf_yasg.utils import swagger_auto_schema
 
@@ -22,6 +23,8 @@ from tasks.tasks import assign_task_to_bot_with_least_number_of_tasks
 class TaskViewSet(ModelViewSet):
     queryset = Task.objects.all()
     serializer_class = TaskSerializer
+    permission_classes = [IsAdminUser]
+
 
     @swagger_auto_schema(responses={200: TaskDetailSerializer})
     def retrieve(self, request, pk):
@@ -55,21 +58,25 @@ class MediaViewSet(ModelViewSet):
     serializer_class = MediaSerializer
     filter_backends = [filters.SearchFilter]
     search_fields = ['tags']
+    permission_classes = [IsAdminUser]
 
 
 class AppFunctionList(ListAPIView):
     queryset = AppFunction.objects.all()
     serializer_class = AppFunctionSerializer
+    permission_classes = [IsAdminUser]
 
 
 class SubfunctionList(ListAPIView):
     queryset = Subfunction.objects.all()
     serializer_class = SubfunctionSerializer
+    permission_classes = [IsAdminUser]
 
 
 class BotViewSet(ModelViewSet):
     queryset = Bot.objects.all()
     serializer_class = BotSerializer
+    permission_classes = [IsAdminUser]
 
     @action(detail=True, methods=['get'])
     def new_tasks(self, request, pk):
@@ -89,10 +96,12 @@ class BotViewSet(ModelViewSet):
 class BotEnabledList(ListAPIView):
     queryset = get_enabled_bots()
     serializer_class = BotSerializer
+    permission_classes = [IsAdminUser]
 
 
 class AppList(ListAPIView):
     queryset = App.objects.all()
     serializer_class = AppSerializer
+    permission_classes = [IsAdminUser]
 
  

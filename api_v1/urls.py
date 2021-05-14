@@ -1,15 +1,15 @@
 from django.urls import path, include
 from django.conf.urls import url
-
 from rest_framework import permissions
 from rest_framework.routers import DefaultRouter
-
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
-
+from rest_framework_simplejwt.views import (
+    TokenObtainPairView, TokenRefreshView
+)
 from .views import (
-    MediaViewSet, TaskViewSet, 
-    AppFunctionList, SubfunctionList, BotViewSet, AppList, BotEnabledList
+    MediaViewSet, TaskViewSet, AppFunctionList, SubfunctionList,
+    BotViewSet, AppList, BotEnabledList
 )
 
 
@@ -43,11 +43,15 @@ urlpatterns = [
         'swagger', cache_timeout=0), name='schema-swagger-ui'
     ),
 
+    # Auth endpoints
+    path('token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+
     # Api endpoints
-    path('functions/', AppFunctionList.as_view(), name='function-list'),
-    path('subfunctions/', SubfunctionList.as_view(), name='subfunction-list'),
-    path('bots/enabled', BotEnabledList.as_view(), name='bot-enabled-list'),
-    path('apps/', AppList.as_view(), name='app-list'),
+    path('functions/', AppFunctionList.as_view(), name='function_list'),
+    path('subfunctions/', SubfunctionList.as_view(), name='subfunction_list'),
+    path('bots/enabled', BotEnabledList.as_view(), name='bot-enabled_list'),
+    path('apps/', AppList.as_view(), name='app_list'),
 ]
 
 

@@ -49,7 +49,7 @@ class SubfunctionSerializer(ModelSerializer):
         fields = ('id', 'name', 'function')
 
 
-class TaskNestedSerializer(TaskSerializer, ModelSerializer):
+class TaskDetailSerializer(TaskSerializer, ModelSerializer):
     media = MediaSerializer(read_only=True)
     function =  AppFunctionSerializer(read_only=True)
     subfunction = SubfunctionSerializer(read_only=True)

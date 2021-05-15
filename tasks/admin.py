@@ -31,3 +31,4 @@ class MediaAdmin(admin.ModelAdmin):
 
 admin.site.register(App)
 admin.site.register(Subfunction)
+

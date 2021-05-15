@@ -1,11 +1,11 @@
+from django.db.models import fields
 from django.db.models.base import Model
 from rest_framework.serializers import (
-    StringRelatedField, ModelSerializer, SlugRelatedField
+    StringRelatedField, ModelSerializer, SerializerMethodField
 )
 from taggit_serializer.serializers import (
     TagListSerializerField,TaggitSerializer
 )
-
 
 from tasks.models import (
     AppFunction, Task, Media, App, Bot, Subfunction

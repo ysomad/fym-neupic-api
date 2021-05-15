@@ -9,7 +9,7 @@ from rest_framework_simplejwt.views import (
 )
 from .views import (
     MediaViewSet, TaskViewSet, AppFunctionList, SubfunctionList,
-    BotViewSet, AppList, BotEnabledList
+    BotViewSet, AppList,
 )
 
 
@@ -50,7 +50,6 @@ urlpatterns = [
     # Api endpoints
     path('functions/', AppFunctionList.as_view(), name='function_list'),
     path('subfunctions/', SubfunctionList.as_view(), name='subfunction_list'),
-    path('bots/enabled', BotEnabledList.as_view(), name='bot-enabled_list'),
     path('apps/', AppList.as_view(), name='app_list'),
 ]
 

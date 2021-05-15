@@ -1,6 +1,8 @@
 from django.db import models
 from django.db.models.fields.related import ForeignKey
 
+from taggit.managers import TaggableManager
+
 
 class Task(models.Model):
 
@@ -36,7 +38,7 @@ class Task(models.Model):
 
     def __str__(self):
        return str(self.id)
-
+       
 
 class Media(models.Model):
 
@@ -49,9 +51,7 @@ class Media(models.Model):
     state = models.CharField(
         max_length=8, choices=State.choices, default=State.UNEDITED
     )
-    tags = models.CharField(
-        max_length=256, blank=True, null=True
-    )
+    tags = TaggableManager(blank=True)
     uploaded_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
@@ -60,7 +60,7 @@ class Media(models.Model):
 
     def __str__(self):
         return str(self.media)
-
+        
 
 class AppFunction(models.Model):
     name = models.CharField(max_length=32, unique=True)

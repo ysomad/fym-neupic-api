@@ -27,10 +27,15 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    # third party
     'rest_framework',
+    'django_filters',
     'drf_yasg',    
     'rest_framework_simplejwt.token_blacklist',
+    'taggit',
+    'taggit_serializer',
 
+    # local
     'tasks',
     'api_v1',
 ]
@@ -130,6 +135,9 @@ MEDIA_URL = '/media/'
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+    'DEFAULT_FILTER_BACKENDS': (
+        'django_filters.rest_framework.DjangoFilterBackend',
     )
 }
 
@@ -156,3 +164,7 @@ CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TIMEZONE = TIME_ZONE
+
+
+# taggit
+TAGGIT_CASE_INSENSITIVE = True

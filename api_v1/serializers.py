@@ -1,9 +1,20 @@
-from rest_framework.serializers import StringRelatedField, ModelSerializer
+from django.db.models.base import Model
+from rest_framework.serializers import (
+    StringRelatedField, ModelSerializer, SlugRelatedField
+)
+from taggit_serializer.serializers import (
+    TagListSerializerField,TaggitSerializer
+)
 
-from tasks.models import AppFunction, Task, Media, App, Bot, Subfunction
+
+from tasks.models import (
+    AppFunction, Task, Media, App, Bot, Subfunction
+)
 
 
-class MediaSerializer(ModelSerializer):
+class MediaSerializer(TaggitSerializer, ModelSerializer):
+    tags = TagListSerializerField()
+
     class Meta:
         model = Media
         fields = ('id', 'media', 'state', 'tags')

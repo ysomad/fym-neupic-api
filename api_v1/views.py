@@ -1,5 +1,5 @@
 from rest_framework.response import Response
-from rest_framework.generics import ListAPIView
+from rest_framework.generics import ListAPIView, ListCreateAPIView
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.decorators import action
 from rest_framework import status
@@ -10,10 +10,12 @@ from drf_yasg.utils import swagger_auto_schema
 
 from .serializers import (
     AppFunctionSerializer, BotSerializer, MediaSerializer, TaskSerializer, 
-    TaskDetailSerializer, SubfunctionSerializer, AppSerializer
+    TaskDetailSerializer, SubfunctionSerializer, AppSerializer, 
 )
 
-from tasks.models import AppFunction, Media, Subfunction, Task, Bot, App
+from tasks.models import (
+    AppFunction, Media, Subfunction, Task, Bot, App, 
+)
 from tasks.managers import (
     get_enabled_bots, get_new_bot_tasks, get_processing_bot_tasks
 )
@@ -57,8 +59,8 @@ class MediaViewSet(ModelViewSet):
     queryset = Media.objects.all()
     serializer_class = MediaSerializer
     filter_backends = [filters.SearchFilter]
-    search_fields = ['tags']
-    permission_classes = [IsAdminUser]
+    search_fields = ['tags__name']
+    # permission_classes = [IsAdminUser]
 
 
 class AppFunctionList(ListAPIView):
@@ -103,5 +105,6 @@ class AppList(ListAPIView):
     queryset = App.objects.all()
     serializer_class = AppSerializer
     permission_classes = [IsAdminUser]
+
 
  

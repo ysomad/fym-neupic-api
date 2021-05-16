@@ -15,9 +15,9 @@ from .views import (
 
 schema_view = get_schema_view(
     openapi.Info(
-        title='FYM bot tasks API',
+        title='FYM Neupic bot tasks API',
         default_version='v1',
-        description='API to create new tasks for bots',
+        description='REST API for bot tasks management',
         contact=openapi.Contact(email='alex@fym.team'),
         license=openapi.License(name='BSD License'),
     ),

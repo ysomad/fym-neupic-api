@@ -3,7 +3,8 @@ from rest_framework.generics import ListAPIView
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.decorators import action
 from rest_framework import status
-from rest_framework import filters
+
+from django_filters.rest_framework import DjangoFilterBackend
 
 from drf_yasg.utils import swagger_auto_schema
 
@@ -45,8 +46,8 @@ class TaskViewSet(ModelViewSet):
 class MediaViewSet(ModelViewSet):
     queryset = Media.objects.all()
     serializer_class = MediaSerializer
-    filter_backends = [filters.SearchFilter]
-    search_fields = ['tags__name']
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['tags__name', 'type'] 
 
     @action(detail=False, methods=['get'])
     def templates(self, request):

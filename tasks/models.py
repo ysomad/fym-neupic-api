@@ -6,14 +6,17 @@ from taggit.managers import TaggableManager
 
 class Media(models.Model):
 
-    class State(models.TextChoices):
-        EDITED = 'edited_image'
-        UNEDITED = 'unedited'
-        TEMPLATE = 'template_video'
+    class Type(models.TextChoices):
+        EDITED_IMG = 'edited_image'
+        UNEDITED_IMG = 'unedited_image'
+        EDITED_VIDEO = 'edited_video'
+        UNEDITED_VIDEO = 'unedited_video'
+        TEMPLATE_VIDEO = 'template_video'
+        GIF = 'gif'
 
     media = models.FileField(upload_to='tasks')
-    state = models.CharField(
-        max_length=16, choices=State.choices, default=State.UNEDITED
+    type = models.CharField(
+        max_length=16, choices=Type.choices, default=Type.UNEDITED_IMG
     )
     tags = TaggableManager(blank=True)
     uploaded_at = models.DateTimeField(auto_now_add=True)
@@ -33,7 +36,6 @@ class Task(models.Model):
         PROCESSING = 'processing'
         DONE = 'done'
 
-    media = models.ForeignKey('Media', on_delete=models.CASCADE)
     media = models.ManyToManyField(Media)
     function = models.ForeignKey(
         'AppFunction', verbose_name='function', on_delete=models.CASCADE
@@ -60,7 +62,7 @@ class Task(models.Model):
         db_table = 'task'
 
     def __str__(self):
-       return str(self.id)
+        return str(self.id)
         
 
 class AppFunction(models.Model):

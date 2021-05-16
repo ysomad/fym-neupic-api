@@ -1,8 +1,8 @@
 from rest_framework.serializers import (
-    StringRelatedField, ModelSerializer
+    StringRelatedField, ModelSerializer, ListField
 )
 from taggit_serializer.serializers import (
-    TagListSerializerField,TaggitSerializer
+    TagListSerializerField, TaggitSerializer
 )
 
 from tasks.models import (
@@ -10,13 +10,16 @@ from tasks.models import (
 )
 
 
+class ListTagListSerializerField(TagListSerializerField, ListField):
+    pass
+
 
 class MediaSerializer(TaggitSerializer, ModelSerializer):
-    tags = TagListSerializerField()
+    tags = ListTagListSerializerField()
 
     class Meta:
         model = Media
-        fields = ('id', 'media', 'state', 'tags')
+        fields = ('id', 'media', 'type', 'tags')
 
 
 class TaskSerializer(ModelSerializer):
@@ -61,7 +64,7 @@ class SubfunctionSerializer(ModelSerializer):
 
 class TaskDetailSerializer(TaskSerializer, ModelSerializer):
     media = MediaSerializer(read_only=True, many=True)
-    function =  AppFunctionSerializer(read_only=True)
+    function = AppFunctionSerializer(read_only=True)
     subfunction = SubfunctionSerializer(read_only=True)
     bot = BotSerializer(read_only=True)
 

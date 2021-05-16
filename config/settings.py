@@ -9,12 +9,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-^da6y=!h*j7&3cv789o@44r2^v53i2e^5_4p-z1noq=jwh$#6g'
+SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get('DEBUG', default=True)
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', '0.0.0.0', '127.0.0.1']
 
 
 # Application definition
@@ -76,8 +76,13 @@ WSGI_APPLICATION = 'config.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        # 'ENGINE': 'django.db.backends.sqlite3',
+        # 'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'HOST': os.environ.get('DB_HOST'),
+        'NAME': os.environ.get('DB_NAME'),
+        'USER': os.environ.get('DB_USER'),
+        'PASSWORD': os.environ.get('DB_PASS'),
     }
 }
 
@@ -106,7 +111,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Europe/Moscow'
 
 USE_I18N = True
 
@@ -119,6 +124,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = str(BASE_DIR.joinpath('staticfiles'))
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
@@ -159,7 +165,7 @@ SWAGGER_SETTINGS = {
 
 
 # Celery
-REDIS_URL = 'redis://localhost:6379'
+REDIS_URL = os.environ.get('REDIS_URL', default='redis://127.0.0.1:6379')
 
 CELERY_BROKER_URL = REDIS_URL
 CELERY_RESULT_BACKEND = REDIS_URL
@@ -171,3 +177,16 @@ CELERY_TIMEZONE = TIME_ZONE
 
 # taggit
 TAGGIT_CASE_INSENSITIVE = True
+
+
+# deploy settings
+SECURE_SSL_REDIRECT = os.environ.get('SECURE_SSL_REDIRECT', default=False)
+SECURE_HSTS_SECONDS = os.environ.get('SECURE_HSTS_SECONDS', default=0)
+SECURE_HSTS_INCLUDE_SUBDOMAINS = os.environ.get(
+    'SECURE_HSTS_INCLUDE_SUBDOMAINS', default=False
+)
+SECURE_HSTS_PRELOAD = os.environ.get('SECURE_HSTS_PRELOAD', default=False)
+SESSION_COOKIE_SECURE = os.environ.get('SESSION_COOKIE_SECURE', default=False)
+CSRF_COOKIE_SECURE = os.environ.get('CSRF_COOKIE_SECURE', default=False)
+
+

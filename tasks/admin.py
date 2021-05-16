@@ -26,7 +26,7 @@ class BotAdmin(admin.ModelAdmin):
 
 @admin.register(Media)
 class MediaAdmin(admin.ModelAdmin):
-    list_display = ('id', 'media', 'state', 'uploaded_at')
+    list_display = ('id', 'media', 'type', 'uploaded_at')
 
 
 @admin.register(Subfunction)

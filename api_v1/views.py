@@ -1,8 +1,8 @@
 from rest_framework.response import Response
-from rest_framework.generics import ListAPIView, ListCreateAPIView
+from rest_framework.generics import ListAPIView
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.decorators import action
-from rest_framework import serializers, status
+from rest_framework import status
 from rest_framework import filters
 
 from drf_yasg.utils import swagger_auto_schema
@@ -18,10 +18,7 @@ from .services import (
 from tasks.models import (
     AppFunction, Media, Subfunction, Task, Bot, App, 
 )
-from tasks.managers import (
-    get_enabled_bots, get_processing_bot_tasks, 
-    get_disabled_bots, get_template_media
-)
+from tasks.managers import get_template_media
 
 
 class TaskViewSet(ModelViewSet):

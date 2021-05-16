@@ -4,6 +4,28 @@ from django.db.models.fields.related import ForeignKey
 from taggit.managers import TaggableManager
 
 
+class Media(models.Model):
+
+    class State(models.TextChoices):
+        EDITED = 'edited_image'
+        UNEDITED = 'unedited'
+        TEMPLATE = 'template_video'
+
+    media = models.FileField(upload_to='tasks')
+    state = models.CharField(
+        max_length=16, choices=State.choices, default=State.UNEDITED
+    )
+    tags = TaggableManager(blank=True)
+    uploaded_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        db_table = 'media'
+        verbose_name_plural = 'media'
+
+    def __str__(self):
+        return str(self.media)
+
+
 class Task(models.Model):
 
     class Status(models.TextChoices):
@@ -12,6 +34,7 @@ class Task(models.Model):
         DONE = 'done'
 
     media = models.ForeignKey('Media', on_delete=models.CASCADE)
+    media = models.ManyToManyField(Media)
     function = models.ForeignKey(
         'AppFunction', verbose_name='function', on_delete=models.CASCADE
     )
@@ -38,28 +61,6 @@ class Task(models.Model):
 
     def __str__(self):
        return str(self.id)
-       
-
-class Media(models.Model):
-
-    class State(models.TextChoices):
-        EDITED = 'edited'
-        UNEDITED = 'unedited'
-        TEMPLATE = 'template'
-
-    media = models.FileField(upload_to='tasks')
-    state = models.CharField(
-        max_length=8, choices=State.choices, default=State.UNEDITED
-    )
-    tags = TaggableManager(blank=True)
-    uploaded_at = models.DateTimeField(auto_now_add=True)
-
-    class Meta:
-        db_table = 'media'
-        verbose_name_plural = 'media'
-
-    def __str__(self):
-        return str(self.media)
         
 
 class AppFunction(models.Model):

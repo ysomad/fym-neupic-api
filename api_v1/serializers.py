@@ -1,7 +1,5 @@
-from django.db.models import fields
-from django.db.models.base import Model
 from rest_framework.serializers import (
-    StringRelatedField, ModelSerializer, SerializerMethodField
+    StringRelatedField, ModelSerializer
 )
 from taggit_serializer.serializers import (
     TagListSerializerField,TaggitSerializer
@@ -10,6 +8,7 @@ from taggit_serializer.serializers import (
 from tasks.models import (
     AppFunction, Task, Media, App, Bot, Subfunction
 )
+
 
 
 class MediaSerializer(TaggitSerializer, ModelSerializer):
@@ -61,7 +60,7 @@ class SubfunctionSerializer(ModelSerializer):
 
 
 class TaskDetailSerializer(TaskSerializer, ModelSerializer):
-    media = MediaSerializer(read_only=True)
+    media = MediaSerializer(read_only=True, many=True)
     function =  AppFunctionSerializer(read_only=True)
     subfunction = SubfunctionSerializer(read_only=True)
     bot = BotSerializer(read_only=True)

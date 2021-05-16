@@ -7,3 +7,5 @@ media/
 *.sql
 *.prod
 .idea/
+static
+staticfiles

@@ -12,9 +12,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get('DEBUG', default=True)
+DEBUG = bool(int(os.environ.get('DEBUG', default=1)))
 
-ALLOWED_HOSTS = ['localhost', '0.0.0.0', '127.0.0.1']
+ALLOWED_HOSTS = ['0.0.0.0', 'localhost', '127.0.0.1', 'django', 'neupic.app']
 
 
 # Application definition
@@ -74,15 +74,16 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
+DEFAULT_POSTGRES_CREDS = 'postgres'
 DATABASES = {
     'default': {
         # 'ENGINE': 'django.db.backends.sqlite3',
         # 'NAME': BASE_DIR / 'db.sqlite3',
         'ENGINE': 'django.db.backends.postgresql',
-        'HOST': os.environ.get('DB_HOST'),
-        'NAME': os.environ.get('DB_NAME'),
-        'USER': os.environ.get('DB_USER'),
-        'PASSWORD': os.environ.get('DB_PASS'),
+        'HOST': os.environ.get('DB_HOST', default=DEFAULT_POSTGRES_CREDS),
+        'NAME': os.environ.get('DB_NAME', default=DEFAULT_POSTGRES_CREDS),
+        'USER': os.environ.get('DB_USER', default=DEFAULT_POSTGRES_CREDS),
+        'PASSWORD': os.environ.get('DB_PASS', default=DEFAULT_POSTGRES_CREDS),
     }
 }
 
@@ -124,7 +125,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = str(BASE_DIR.joinpath('staticfiles'))
+STATIC_ROOT = '/static/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field

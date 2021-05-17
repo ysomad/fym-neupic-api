@@ -23,6 +23,7 @@ RUN curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-
 RUN poetry config virtualenvs.create false
 
 # Install python dependencies
-RUN poetry install
+RUN poetry install --no-dev
 
 RUN apk del .tmp-build-deps
+

@@ -143,12 +143,13 @@ REST_FRAMEWORK = {
     'DEFAULT_FILTER_BACKENDS': (
         'django_filters.rest_framework.DjangoFilterBackend',
     ),
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAdminUser',
+    )
 }
 
 if DEBUG is False:
-    REST_FRAMEWORK['DEFAULT_PERMISSION_CLASSES'].append(
-        ('rest_framework.permissions.IsAdminUser',)
-    )
+    REST_FRAMEWORK
 
 
 # Swagger

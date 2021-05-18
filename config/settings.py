@@ -145,6 +145,11 @@ REST_FRAMEWORK = {
     ),
 }
 
+if DEBUG is False:
+    REST_FRAMEWORK['DEFAULT_PERMISSION_CLASSES'].append(
+        ('rest_framework.permissions.AllowAny',)
+    )
+
 
 # Swagger
 SWAGGER_SETTINGS = {

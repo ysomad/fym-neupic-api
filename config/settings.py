@@ -147,7 +147,7 @@ REST_FRAMEWORK = {
 
 if DEBUG is False:
     REST_FRAMEWORK['DEFAULT_PERMISSION_CLASSES'].append(
-        ('rest_framework.permissions.AllowAny',)
+        ('rest_framework.permissions.IsAdminUser',)
     )
 
 

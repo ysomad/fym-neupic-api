@@ -14,9 +14,12 @@ services:
 
   django:
     container_name: "django"
-    build:
+    build: 
       context: .
       dockerfile: ./docker/dev/django/Dockerfile
+    command: >
+      sh -c "python manage.py migrate &&
+             python manage.py runserver 0.0.0.0:8000"
     ports:
       - 8000:8000
     volumes:
@@ -26,6 +29,7 @@ services:
     image: django-image
     depends_on:
       - postgres
+      - redis
   
   redis:
     container_name: "redis"
@@ -34,16 +38,17 @@ services:
   celery:
     container_name: "celery"
     restart: always
-    image: django-image
+    build: 
+      context: .
+      dockerfile: ./docker/dev/django/Dockerfile
     command: celery -A config worker --loglevel=INFO
     volumes:
       - .:/usr/src/app
     env_file:
       - ./.env.dev
     depends_on:
-      - postgres
-      - redis
       - django
+      - redis
 
 volumes: 
   postgres_data:

@@ -2,46 +2,48 @@ version: '3.9'
  
 services:
 
-  db:
+  postgres:
+    container_name: "postgres"
     image: postgres:13-alpine
+    volumes: 
+      - postgres_data:/var/lib/postgresql/data
     env_file:
       - ./.env.dev
-    container_name: "postgres"
     ports:
-      - "5432:5432"
+      - 5432:5432
 
-  app:
+  django:
+    container_name: "django"
     build:
       context: .
+      dockerfile: ./docker/dev/django/Dockerfile
     ports:
-      - "8000:8000"
+      - 8000:8000
     volumes:
       - .:/usr/src/app
-    command: >
-      sh -c "python manage.py makemigrations &&
-             python manage.py migrate &&
-             python manage.py runserver 0.0.0.0:8000"
     env_file:
       - ./.env.dev
-    container_name: "django"
+    image: django-image
     depends_on:
-      - db
+      - postgres
   
   redis:
-    image: redis:alpine
     container_name: "redis"
+    image: redis:alpine
 
   celery:
+    container_name: "celery"
     restart: always
-    build:
-      context: .
+    image: django-image
     command: celery -A config worker --loglevel=INFO
     volumes:
       - .:/usr/src/app
     env_file:
       - ./.env.dev
-    container_name: "celery"
     depends_on:
-      - db
+      - postgres
       - redis
-      - app
+      - django
+
+volumes: 
+  postgres_data:

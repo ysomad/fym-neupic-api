@@ -12,9 +12,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = bool(int(os.environ.get('DEBUG', default=1)))
+DEBUG = True
 
-ALLOWED_HOSTS = ['0.0.0.0', 'localhost', '127.0.0.1', 'django', 'neupic.app']
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -134,7 +134,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 # Media routes
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_ROOT = '/media/'
 MEDIA_URL = '/media/'
 
 
@@ -178,16 +178,4 @@ CELERY_TIMEZONE = TIME_ZONE
 
 # taggit
 TAGGIT_CASE_INSENSITIVE = True
-
-
-# deploy settings
-SECURE_SSL_REDIRECT = os.environ.get('SECURE_SSL_REDIRECT', default=False)
-SECURE_HSTS_SECONDS = os.environ.get('SECURE_HSTS_SECONDS', default=0)
-SECURE_HSTS_INCLUDE_SUBDOMAINS = os.environ.get(
-    'SECURE_HSTS_INCLUDE_SUBDOMAINS', default=False
-)
-SECURE_HSTS_PRELOAD = os.environ.get('SECURE_HSTS_PRELOAD', default=False)
-SESSION_COOKIE_SECURE = os.environ.get('SESSION_COOKIE_SECURE', default=False)
-CSRF_COOKIE_SECURE = os.environ.get('CSRF_COOKIE_SECURE', default=False)
-
 

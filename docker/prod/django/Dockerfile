@@ -27,3 +27,6 @@ RUN poetry install --no-dev
 
 RUN apk del .tmp-build-deps
 
+COPY ./docker/django/dev/entrypoint.sh /entrypoint.sh
+ENTRYPOINT [ "/entrypoint.sh" ]
+

@@ -25,6 +25,8 @@ from tasks.managers import get_template_media
 class TaskViewSet(ModelViewSet):
     queryset = Task.objects.all()
     serializer_class = TaskSerializer
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['status', 'bot__name'] 
 
     @swagger_auto_schema(responses={200: TaskDetailSerializer})
     def retrieve(self, request, pk):

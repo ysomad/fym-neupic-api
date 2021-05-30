@@ -17,7 +17,7 @@ class Media(models.Model):
         TEMPLATE_VID = 'template_video'
 
     media = models.FileField(upload_to='tasks')
-    preview = models.CharField(max_length=2048, blank=True, null=True)
+    preview = models.URLField(max_length=2048, blank=True, null=True)
     type = models.CharField(max_length=16, choices=Type.choices)
     tags = TaggableManager(blank=True)
     uploaded_at = models.DateTimeField(auto_now_add=True)

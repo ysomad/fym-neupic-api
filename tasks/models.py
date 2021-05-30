@@ -11,13 +11,14 @@ class Media(models.Model):
         UNEDITED_IMG = 'unedited_image'
         EDITED_VIDEO = 'edited_video'
         UNEDITED_VIDEO = 'unedited_video'
-        TEMPLATE_VIDEO = 'template_video'
-        GIF = 'gif'
+        EDITED_GIF = 'edited_gif'
+        UNEDITED_GIF = 'unedited_gif'
+        TEMPLATE_GIF = 'template_gif'
+        TEMPLATE_VID = 'template_video'
 
     media = models.FileField(upload_to='tasks')
-    type = models.CharField(
-        max_length=16, choices=Type.choices, default=Type.UNEDITED_IMG
-    )
+    preview = models.CharField(max_length=2048, blank=True, null=True)
+    type = models.CharField(max_length=16, choices=Type.choices)
     tags = TaggableManager(blank=True)
     uploaded_at = models.DateTimeField(auto_now_add=True)
 
@@ -35,6 +36,7 @@ class Task(models.Model):
         NEW = 'new'
         PROCESSING = 'processing'
         DONE = 'done'
+        ERROR = 'error'
 
     media = models.ManyToManyField(Media)
     function = models.ForeignKey(

@@ -19,7 +19,7 @@ class MediaSerializer(TaggitSerializer, ModelSerializer):
 
     class Meta:
         model = Media
-        fields = ('id', 'media', 'type', 'tags')
+        fields = ('id', 'media', 'preview', 'type', 'tags')
 
 
 class TaskSerializer(ModelSerializer):

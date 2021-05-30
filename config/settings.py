@@ -1,5 +1,6 @@
 import os
 from pathlib import Path
+from datetime import timedelta
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -143,14 +144,7 @@ REST_FRAMEWORK = {
     'DEFAULT_FILTER_BACKENDS': (
         'django_filters.rest_framework.DjangoFilterBackend',
     ),
-    # 'DEFAULT_PERMISSION_CLASSES': (
-    #     'rest_framework.permissions.IsAdminUser',
-    # )
 }
-
-if DEBUG is False:
-    REST_FRAMEWORK
-
 
 # Swagger
 SWAGGER_SETTINGS = {
@@ -178,6 +172,12 @@ CELERY_TIMEZONE = TIME_ZONE
 
 # taggit
 TAGGIT_CASE_INSENSITIVE = True
+
+
+# SimpleJWT
+SLIDING_TOKEN_LIFETIME = timedelta(days=1)
+SLIDING_TOKEN_REFRESH_LIFETIME = timedelta(weeks=4)
+
 
 # deploy
 # SECURE_SSL_REDIRECT=True

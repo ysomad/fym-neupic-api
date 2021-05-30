@@ -1,7 +1,9 @@
+from rest_framework import permissions
 from rest_framework.response import Response
 from rest_framework.generics import ListAPIView
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.decorators import action
+from rest_framework.permissions import IsAdminUser
 from rest_framework import status
 
 from django_filters.rest_framework import DjangoFilterBackend
@@ -13,13 +15,12 @@ from .serializers import (
     TaskDetailSerializer, SubfunctionSerializer, AppSerializer, 
 )
 from .services import (
-    create_new_task, get_bot_tasks_by_status, get_bots_by_state
+    create_new_task, get_bot_tasks_by_status, get_permission_classes
 )
 
 from tasks.models import (
     AppFunction, Media, Subfunction, Task, Bot, App, 
 )
-from tasks.managers import get_template_media
 
 
 class TaskViewSet(ModelViewSet):
@@ -27,6 +28,7 @@ class TaskViewSet(ModelViewSet):
     serializer_class = TaskSerializer
     filter_backends = [DjangoFilterBackend]
     filterset_fields = ['status', 'bot__name'] 
+    permission_classes = get_permission_classes()
 
     @swagger_auto_schema(responses={200: TaskDetailSerializer})
     def retrieve(self, request, pk):
@@ -50,27 +52,29 @@ class MediaViewSet(ModelViewSet):
     serializer_class = MediaSerializer
     filter_backends = [DjangoFilterBackend]
     filterset_fields = ['tags__name', 'type'] 
-
-    @action(detail=False, methods=['get'])
-    def templates(self, request):
-        template_media = get_template_media()
-        task_serializer = self.serializer_class(template_media, many=True)
-        return Response(task_serializer.data)
+    permission_classes = get_permission_classes()
 
 
 class AppFunctionList(ListAPIView):
     queryset = AppFunction.objects.all()
     serializer_class = AppFunctionSerializer
+    permission_classes = get_permission_classes()
 
 
 class SubfunctionList(ListAPIView):
     queryset = Subfunction.objects.all()
     serializer_class = SubfunctionSerializer
+    permission_classes = get_permission_classes()
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['function__name', 'function__app__name']
 
 
 class BotViewSet(ModelViewSet):
     queryset = Bot.objects.all()
     serializer_class = BotSerializer
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['state', 'name'] 
+    permission_classes = get_permission_classes()
 
     @action(detail=True, methods=['get'])
     def new_tasks(self, request, pk):
@@ -82,20 +86,11 @@ class BotViewSet(ModelViewSet):
         task_serializer = get_bot_tasks_by_status(self, Task.Status.PROCESSING) 
         return Response(task_serializer.data)
 
-    @action(detail=False, methods=['get'])
-    def enabled(self, request):
-        serializer = get_bots_by_state(Bot.State.ENABLED)
-        return Response(serializer.data)
-
-    @action(detail=False, methods=['get'])
-    def disabled(self, request):
-        serializer = get_bots_by_state(Bot.State.DISABLED)
-        return Response(serializer.data)
-
 
 class AppList(ListAPIView):
     queryset = App.objects.all()
     serializer_class = AppSerializer
+    permission_classes = get_permission_classes()
 
 
  

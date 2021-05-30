@@ -1,5 +1,9 @@
+from typing import Union
+from rest_framework.permissions import IsAdminUser, AllowAny
+
 from .serializers import TaskSerializer, BotSerializer
 
+from config import settings
 from tasks.models import Task, Bot
 from tasks.tasks import assign_task_to_bot_with_least_number_of_tasks
 from tasks.managers import (
@@ -39,3 +43,11 @@ def get_bots_by_state(bot_state: str) -> BotSerializer:
     elif bot_state == Bot.State.DISABLED:
         bots = get_disabled_bots()
     return BotSerializer(bots, many=True)
+
+
+def get_permission_classes(
+        debug: bool = settings.DEBUG) -> Union[AllowAny, IsAdminUser]:
+    """
+    Returns permission class depending on debug is True or False
+    """
+    return [AllowAny] if debug else [IsAdminUser]

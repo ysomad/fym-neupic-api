@@ -4,9 +4,10 @@ services:
 
   postgres:
     container_name: "postgres"
-    image: postgres:13-alpine
-    volumes: 
-      - postgres_data:/var/lib/postgresql/data
+    restart: always
+    build: 
+      context: .
+      dockerfile: ./docker/prod/postgres/Dockerfile
     env_file:
       - ./.env.prod
     ports:
@@ -14,6 +15,7 @@ services:
 
   django:
     container_name: "django"
+    restart: always
     build: 
       context: .
       dockerfile: ./docker/prod/django/Dockerfile
@@ -34,6 +36,7 @@ services:
   
   redis:
     container_name: "redis"
+    restart: always
     image: redis:alpine
 
   celery:
@@ -53,6 +56,7 @@ services:
   
   nginx:
     container_name: "nginx"
+    restart: always
     build:
       context: .
       dockerfile: ./docker/prod/nginx/Dockerfile

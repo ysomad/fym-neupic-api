@@ -3,10 +3,7 @@ from rest_framework.response import Response
 from rest_framework.generics import ListAPIView
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.decorators import action
-from rest_framework.permissions import IsAdminUser
 from rest_framework import status
-
-from django_filters.rest_framework import DjangoFilterBackend
 
 from drf_yasg.utils import swagger_auto_schema
 
@@ -26,7 +23,6 @@ from tasks.models import (
 class TaskViewSet(ModelViewSet):
     queryset = Task.objects.all()
     serializer_class = TaskSerializer
-    filter_backends = [DjangoFilterBackend]
     filterset_fields = ['status', 'bot__name'] 
     permission_classes = get_permission_classes()
 
@@ -50,7 +46,6 @@ class TaskViewSet(ModelViewSet):
 class MediaViewSet(ModelViewSet):
     queryset = Media.objects.all()
     serializer_class = MediaSerializer
-    filter_backends = [DjangoFilterBackend]
     filterset_fields = ['tags__name', 'type'] 
     permission_classes = get_permission_classes()
 
@@ -65,14 +60,12 @@ class SubfunctionList(ListAPIView):
     queryset = Subfunction.objects.all()
     serializer_class = SubfunctionSerializer
     permission_classes = get_permission_classes()
-    filter_backends = [DjangoFilterBackend]
     filterset_fields = ['function__name', 'function__app__name']
 
 
 class BotViewSet(ModelViewSet):
     queryset = Bot.objects.all()
     serializer_class = BotSerializer
-    filter_backends = [DjangoFilterBackend]
     filterset_fields = ['state', 'name'] 
     permission_classes = get_permission_classes()
 

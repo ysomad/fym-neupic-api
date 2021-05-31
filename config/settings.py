@@ -13,9 +13,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = bool(int(os.environ.get('DEBUG', default=1)))
+DEBUG = bool(int(os.environ.get('DEBUG', 1)))
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['*'] if DEBUG else os.environ.get('ALLOWED_HOSTS').split(' ')
 
 
 # Application definition
@@ -78,10 +78,10 @@ WSGI_APPLICATION = 'config.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'HOST': os.environ.get('DB_HOST', default='postgres'),
-        'NAME': os.environ.get('DB_NAME', default='postgres'),
-        'USER': os.environ.get('DB_USER', default='postgres'),
-        'PASSWORD': os.environ.get('DB_PASS', default='postgres'),
+        'HOST': os.environ.get('POSTGRES_HOST', 'postgres'),
+        'NAME': os.environ.get('POSTGRES_DB', 'postgres'),
+        'USER': os.environ.get('POSTGRES_USER', 'postgres'),
+        'PASSWORD': os.environ.get('POSTGRES_PASSWORD', 'postgres'),
     }
 }
 
@@ -180,9 +180,12 @@ SLIDING_TOKEN_REFRESH_LIFETIME = timedelta(weeks=4)
 
 
 # deploy
-# SECURE_SSL_REDIRECT=True
-# SECURE_HSTS_SECONDS=2592000
-# SECURE_HSTS_INCLUDE_SUBDOMAINS=True
-# SECURE_HSTS_PRELOAD=True
-# SESSION_COOKIE_SECURE=True
-# CSRF_COOKIE_SECURE=True
+if not DEBUG:
+    SECURE_SSL_REDIRECT=True
+    SECURE_HSTS_SECONDS=2592000
+    SECURE_HSTS_INCLUDE_SUBDOMAINS=True
+    SECURE_HSTS_PRELOAD=True
+    SESSION_COOKIE_SECURE=True
+    CSRF_COOKIE_SECURE=True
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+

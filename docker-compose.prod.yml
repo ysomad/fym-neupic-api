@@ -63,32 +63,13 @@ services:
     volumes: 
       - ./static:/static
       - ./media:/media
-      - certs:/etc/nginx/certs
-      - html:/usr/share/nginx/html
-      - vhost:/etc/nginx/vhost.d
-      - /var/run/docker.sock:/tmp/docker.sock:ro
     ports: 
       - 80:80
       - 443:443
     depends_on: 
       - django
-  
-  nginx-ssl:
-    image: jrcs/letsencrypt-nginx-proxy-companion
-    env_file:
-      - .env.prod
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock:ro
-      - certs:/etc/nginx/certs
-      - html:/usr/share/nginx/html
-      - vhost:/etc/nginx/vhost.d
-    depends_on:
-      - nginx
 
 volumes: 
   postgres_data:
   static:
   media:
-  certs:
-  html:
-  vhost:

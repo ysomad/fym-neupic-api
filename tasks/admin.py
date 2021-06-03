@@ -11,6 +11,7 @@ class SubfunctionInline(admin.TabularInline):
 @admin.register(Task)
 class TaskAdmin(admin.ModelAdmin):
     list_display = ('function', 'bot', 'status', 'created_at')
+    filter_horizontal = ('media',)
 
 
 @admin.register(AppFunction)

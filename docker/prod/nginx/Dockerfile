@@ -1,5 +1,4 @@
-FROM jwilder/nginx-proxy
+FROM nginx:1.2-alpine
 
-COPY ./docker/prod/nginx/vhost.d/default /etc/nginx/vhost.d/default
 RUN rm /etc/nginx/conf.d/default.conf
 COPY ./docker/prod/nginx/neupic_api.conf /etc/nginx/conf.d/

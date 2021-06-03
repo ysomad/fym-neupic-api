@@ -10,19 +10,19 @@ class SubfunctionInline(admin.TabularInline):
 
 @admin.register(Task)
 class TaskAdmin(admin.ModelAdmin):
-    list_display = ('function', 'bot', 'status', 'created_at')
+    list_display = ('id', 'function', 'bot', 'status', 'created_at')
     filter_horizontal = ('media',)
 
 
 @admin.register(AppFunction)
 class AppFunctionAdmin(admin.ModelAdmin):
-    list_display = ('name', 'app')
+    list_display = ('id', 'name', 'app')
     inlines = [SubfunctionInline]
 
 
 @admin.register(Bot)
 class BotAdmin(admin.ModelAdmin):
-    list_display = ('name', 'state')
+    list_display = ('id', 'name', 'state')
 
 
 @admin.register(Media)
@@ -32,7 +32,7 @@ class MediaAdmin(admin.ModelAdmin):
 
 @admin.register(Subfunction)
 class SubfunctionAdmin(admin.ModelAdmin):
-    list_display = ('name', 'function', 'get_function_app_name')
+    list_display = ('id', 'name', 'function', 'get_function_app_name')
 
     def get_function_app_name(self, obj):
         return obj.function.app
@@ -40,5 +40,7 @@ class SubfunctionAdmin(admin.ModelAdmin):
     get_function_app_name.short_description = 'app'
 
 
-admin.site.register(App)
+@admin.register(App)
+class AppAdmin(admin.ModelAdmin):
+    list_display = ('id', 'name')
 

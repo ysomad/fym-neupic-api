@@ -8,6 +8,13 @@ from taggit_serializer.serializers import (
 from tasks.models import (
     AppFunction, Task, Media, App, Bot, Subfunction
 )
+from taggit.models import Tag
+
+
+class TagSerializer(ModelSerializer):
+    class Meta:
+        model = Tag
+        fields = ('id', 'name', 'slug')
 
 
 class ListTagListSerializerField(TagListSerializerField, ListField):

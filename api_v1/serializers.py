@@ -1,3 +1,4 @@
+from django.db.models import fields
 from rest_framework.serializers import (
     StringRelatedField, ModelSerializer, ListField
 )
@@ -6,9 +7,15 @@ from taggit_serializer.serializers import (
 )
 
 from tasks.models import (
-    AppFunction, Task, Media, App, Bot, Subfunction
+    AppFunction, Task, Media, App, Bot, Subfunction, Config
 )
 from taggit.models import Tag
+
+
+class ConfigSerializer(ModelSerializer):
+    class Meta:
+        model = Config
+        fields = '__all__'
 
 
 class TagSerializer(ModelSerializer):

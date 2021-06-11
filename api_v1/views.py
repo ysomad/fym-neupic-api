@@ -1,7 +1,6 @@
 from rest_framework import permissions
 from rest_framework.response import Response
-from rest_framework.generics import ListAPIView
-from rest_framework.serializers import ModelSerializer
+from rest_framework.generics import ListAPIView, ListCreateAPIView
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.decorators import action
 from rest_framework import status
@@ -12,14 +11,19 @@ from taggit.models import Tag
 from .serializers import (
     AppFunctionSerializer, BotSerializer, MediaSerializer, TaskSerializer, 
     TaskDetailSerializer, SubfunctionSerializer, AppSerializer, 
-    TagSerializer
+    TagSerializer, ConfigSerializer
 )
 from .services import (
     create_new_task, get_bot_tasks_by_status, get_permission_classes
 )
 from tasks.models import (
-    AppFunction, Media, Subfunction, Task, Bot, App, 
+    AppFunction, Media, Subfunction, Task, Bot, App, Config
 )
+
+
+class ConfigListCreateAPIView(ListCreateAPIView):
+    queryset = Config.objects.all()
+    serializer_class = ConfigSerializer
 
 
 class TaskViewSet(ModelViewSet):

@@ -4,6 +4,19 @@ from django.db.models.fields.related import ForeignKey
 from taggit.managers import TaggableManager
 
 
+class Config(models.Model):
+
+    class Type(models.TextChoices):
+        DEV = 'dev'
+        PROD = 'prod'
+    
+    type = models.CharField(max_length=8, choices=Type.choices)
+    lock_app_after_function = models.BooleanField()
+    lock_app_before_function = models.BooleanField()
+    lock_main_menu = models.BooleanField()
+    amount_try_function = models.PositiveSmallIntegerField(default=1)
+
+
 class Media(models.Model):
 
     class Type(models.TextChoices):

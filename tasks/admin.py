@@ -1,6 +1,9 @@
 from django.contrib import admin
 
-from .models import Task, Media, App, AppFunction, Subfunction, Bot
+from .models import Task, Media, App, AppFunction, Subfunction, Bot, Config
+
+
+admin.site.register(Config)
 
 
 class SubfunctionInline(admin.TabularInline):
@@ -43,4 +46,5 @@ class SubfunctionAdmin(admin.ModelAdmin):
 @admin.register(App)
 class AppAdmin(admin.ModelAdmin):
     list_display = ('id', 'name')
+
 

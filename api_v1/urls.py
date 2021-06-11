@@ -9,7 +9,7 @@ from rest_framework_simplejwt.views import (
 )
 from .views import (
     MediaViewSet, TaskViewSet, AppFunctionList, SubfunctionList,
-    BotViewSet, AppList, TagList,
+    BotViewSet, AppList, TagList, ConfigListCreateAPIView
 )
 
 
@@ -52,6 +52,7 @@ urlpatterns = [
     path('subfunctions/', SubfunctionList.as_view(), name='subfunction_list'),
     path('apps/', AppList.as_view(), name='app_list'),
     path('tags/', TagList.as_view(), name='tag_list'),
+    path('configs/', ConfigListCreateAPIView.as_view(), name='config_list'),
 ]
 
 

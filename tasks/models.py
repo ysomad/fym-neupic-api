@@ -16,6 +16,9 @@ class Config(models.Model):
     lock_main_menu = models.BooleanField()
     amount_try_function = models.PositiveSmallIntegerField(default=1)
 
+    def __str__(self):
+        return str(self.type)
+
 
 class Media(models.Model):
 

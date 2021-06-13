@@ -46,6 +46,13 @@ def get_processing_and_new_bot_tasks(bot_id):
     return Task.objects.filter(bot=bot_id).exclude(status=Task.Status.DONE)
 
 
+def get_all_bot_tasks(bot_id):
+    """
+    Returns QuerySet of all tasks of specific bot with bot_id
+    """
+    return Task.objects.filter(bot=bot_id)
+
+
 def get_template_media():
     """
     Returns QuerySet of media with state 'template'

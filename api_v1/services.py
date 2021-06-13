@@ -51,3 +51,4 @@ def get_permission_classes(
     Returns permission class depending on debug is True or False
     """
     return [AllowAny] if debug else [IsAdminUser]
+

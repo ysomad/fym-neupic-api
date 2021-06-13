@@ -19,6 +19,7 @@ from .services import (
 from tasks.models import (
     AppFunction, Media, Subfunction, Task, Bot, App, Config
 )
+from tasks.managers import get_all_bot_tasks
 
 
 class ConfigListCreateAPIView(ListCreateAPIView):
@@ -84,6 +85,14 @@ class BotViewSet(ModelViewSet):
     def processing_tasks(self, request, pk):
         task_serializer = get_bot_tasks_by_status(self, Task.Status.PROCESSING) 
         return Response(task_serializer.data)
+
+    @action(detail=True, methods=['delete'])
+    def delete_tasks(self, request, pk):
+        bot_tasks = get_all_bot_tasks(pk)
+        if bot_tasks:
+            self.perform_destroy(bot_tasks)
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        return Response(status=status.HTTP_404_NOT_FOUND)
 
 
 class AppList(ListAPIView):

@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'taggit',
     'taggit_serializer',
     'django_cleanup.apps.CleanupConfig',
+    'drf_api_logger',
 
     # local
     'tasks',
@@ -50,6 +51,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    'drf_api_logger.middleware.api_logger_middleware.APILoggerMiddleware',
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -188,4 +191,8 @@ SLIDING_TOKEN_REFRESH_LIFETIME = timedelta(weeks=4)
 # SESSION_COOKIE_SECURE=True
 # CSRF_COOKIE_SECURE=True
 # SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+
+# DRF logging
+DRF_API_LOGGER_DATABASE = True
 

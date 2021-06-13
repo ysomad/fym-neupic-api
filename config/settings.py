@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt.token_blacklist',
     'taggit',
     'taggit_serializer',
+    'django_cleanup.apps.CleanupConfig',
 
     # local
     'tasks',

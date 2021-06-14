@@ -1,4 +1,4 @@
 FROM nginx:1.19-alpine
 
-RUN rm /etc/nginx/conf.d/default.conf
-COPY ./docker/prod/nginx/neupic_api.conf /etc/nginx/conf.d/
+COPY ./docker/prod/nginx/vhost.d/default /etc/nginx/vhost.d/default
+COPY ./docker/prod/nginx/custom.conf /etc/nginx/conf.d/custom.conf

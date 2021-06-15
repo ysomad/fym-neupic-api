@@ -1,15 +1,15 @@
 from typing import Union
+
 from rest_framework.permissions import IsAdminUser, AllowAny
+from rest_framework.viewsets import ModelViewSet
 
 from .serializers import TaskSerializer, BotSerializer
-
 from config import settings
+
 from tasks.models import Task, Bot
 from tasks.tasks import assign_task_to_bot_with_least_number_of_tasks
-from tasks.managers import (
-    get_new_bot_tasks, get_processing_bot_tasks, get_disabled_bots,
-    get_enabled_bots
-)
+from tasks.managers import (get_new_bot_tasks, get_processing_bot_tasks, 
+    get_disabled_bots, get_enabled_bots)
 
 
 def create_new_task(task_view, serializer) -> None:
@@ -22,7 +22,8 @@ def create_new_task(task_view, serializer) -> None:
     assign_task_to_bot_with_least_number_of_tasks.delay(serializer.data['id']) 
 
 
-def get_bot_tasks_by_status(bot_viewset, task_status) -> TaskSerializer:
+def get_bot_tasks_by_status(
+        bot_viewset: ModelViewSet, task_status: str) -> TaskSerializer:
     """
     Gets tasks assigned to specific bot with task_status
     """

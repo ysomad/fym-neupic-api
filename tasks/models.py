@@ -1,5 +1,4 @@
 from django.db import models
-from django.db.models.fields.related import ForeignKey
 
 from taggit.managers import TaggableManager
 
@@ -102,7 +101,7 @@ class AppFunction(models.Model):
     """
 
     name = models.CharField(max_length=32, unique=True)
-    app = ForeignKey('App', on_delete=models.CASCADE)
+    app = models.ForeignKey('App', on_delete=models.CASCADE)
 
     class Meta:
         db_table = 'app_function'

@@ -1,15 +1,12 @@
-from django.db.models import fields
-from rest_framework.serializers import (
-    StringRelatedField, ModelSerializer, ListField
-)
-from taggit_serializer.serializers import (
-    TagListSerializerField, TaggitSerializer
-)
+from rest_framework.serializers import (StringRelatedField, ModelSerializer, 
+    ListField)
+
+from taggit.models import Tag
+from taggit_serializer.serializers import (TagListSerializerField, 
+    TaggitSerializer)
 
 from tasks.models import (
-    AppFunction, Task, Media, App, Bot, Subfunction, Config
-)
-from taggit.models import Tag
+    AppFunction, Task, Media, App, Bot, Subfunction, Config)
 
 
 class ConfigSerializer(ModelSerializer):
@@ -81,4 +78,6 @@ class TaskDetailSerializer(TaskSerializer, ModelSerializer):
     function = AppFunctionSerializer(read_only=True)
     subfunction = SubfunctionSerializer(read_only=True)
     bot = BotSerializer(read_only=True)
+
+
 

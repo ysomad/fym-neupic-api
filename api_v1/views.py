@@ -1,4 +1,3 @@
-from rest_framework import permissions
 from rest_framework.response import Response
 from rest_framework.generics import ListAPIView, ListCreateAPIView
 from rest_framework.viewsets import ModelViewSet

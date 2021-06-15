@@ -5,6 +5,10 @@ from taggit.managers import TaggableManager
 
 
 class Config(models.Model):
+    """
+    Config model for storing development and production
+    settings for Neupic application
+    """
 
     class Type(models.TextChoices):
         DEV = 'dev'
@@ -21,6 +25,9 @@ class Config(models.Model):
 
 
 class Media(models.Model):
+    """
+    Model for storing images, video and gifs with different tags
+    """
 
     class Type(models.TextChoices):
         EDITED_IMG = 'edited_image'
@@ -47,6 +54,10 @@ class Media(models.Model):
 
 
 class Task(models.Model):
+    """
+    Representation of tasks which is creating by users in main application
+    for bots
+    """
 
     class Status(models.TextChoices):
         NEW = 'new'
@@ -84,6 +95,12 @@ class Task(models.Model):
         
 
 class AppFunction(models.Model):
+    """
+    Model for storing application functions with which the 
+    bot should process media, every function bind to specific
+    application
+    """
+
     name = models.CharField(max_length=32, unique=True)
     app = ForeignKey('App', on_delete=models.CASCADE)
 
@@ -95,6 +112,10 @@ class AppFunction(models.Model):
 
 
 class Subfunction(models.Model):
+    """
+    Model for storing nested functions of application functions
+    """
+
     name = models.CharField(max_length=32, unique=True)
     function = models.ForeignKey(
         'AppFunction', null=True, on_delete=models.CASCADE
@@ -108,6 +129,9 @@ class Subfunction(models.Model):
 
 
 class Bot(models.Model):
+    """
+    Bots which will process media from tasks
+    """
 
     class State(models.TextChoices):
         ENABLED = 'enabled'
@@ -126,6 +150,10 @@ class Bot(models.Model):
 
 
 class App(models.Model):
+    """
+    Model for storing application names
+    """
+
     name = models.CharField(max_length=32, unique=True)
 
     class Meta:

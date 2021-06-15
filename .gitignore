@@ -5,7 +5,8 @@ db.sqlite3
 media/
 *.sh
 *.sql
-*.prod
+.env.prod
+.env.dev
 .idea/
 static
 staticfiles

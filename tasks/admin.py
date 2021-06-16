@@ -13,8 +13,10 @@ class SubfunctionInline(admin.TabularInline):
 
 @admin.register(Task)
 class TaskAdmin(admin.ModelAdmin):
-    list_display = ('id', 'function', 'bot', 'status', 'created_at')
+    list_display = (
+        'id', 'function', 'subfunction', 'bot', 'status', 'created_at')
     filter_horizontal = ('media',)
+    list_filter = ('function__name', 'subfunction__name', 'status', 'bot')
 
 
 @admin.register(AppFunction)
@@ -31,11 +33,13 @@ class BotAdmin(admin.ModelAdmin):
 @admin.register(Media)
 class MediaAdmin(admin.ModelAdmin):
     list_display = ('id', 'media', 'type', 'uploaded_at')
+    list_filter = ('type', 'tags')
 
 
 @admin.register(Subfunction)
 class SubfunctionAdmin(admin.ModelAdmin):
     list_display = ('id', 'name', 'function', 'get_function_app_name')
+    list_filter = ('function',)
 
     def get_function_app_name(self, obj):
         return obj.function.app

@@ -80,6 +80,7 @@ class Task(models.Model):
         'Bot', 
         blank=True, 
         null=True, 
+        verbose_name='bot name',
         on_delete=models.CASCADE
     ) 
     status = models.CharField(
@@ -101,7 +102,9 @@ class AppFunction(models.Model):
     application
     """
 
-    name = models.CharField(max_length=32, unique=True)
+    name = models.CharField(
+        max_length=32, unique=True, verbose_name='function'
+    )
     app = models.ForeignKey('App', on_delete=models.CASCADE)
 
     class Meta:
@@ -116,7 +119,9 @@ class Subfunction(models.Model):
     Model for storing nested functions of application functions
     """
 
-    name = models.CharField(max_length=32, unique=True)
+    name = models.CharField(
+        max_length=32, unique=True, verbose_name='subfunction'
+    )
     function = models.ForeignKey(
         'AppFunction', null=True, on_delete=models.CASCADE
     )

@@ -22,7 +22,7 @@ $ docker-compose build
 $ docker-compose up -d
 ```
 
-## Production
+### Production
 1. Create and fill in `.env.prod` with db credentials
 2. Build production docker compose
 ```bash

@@ -13,15 +13,16 @@ DEBUG = bool(int(os.environ.get('DEBUG', 1)))
 ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', 'localhost').split(',')
 
 
-INSTALLED_APPS = [
+DJANGO_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+]
 
-    # third party
+THIRD_PARTY_APPS = [
     'rest_framework',
     'django_filters',
     'drf_yasg',    
@@ -30,11 +31,14 @@ INSTALLED_APPS = [
     'taggit_serializer',
     'django_cleanup.apps.CleanupConfig',
     'drf_api_logger',
-
-    # local
-    'tasks',
-    'api_v1',
 ]
+
+LOCAL_APPS = [
+    'tasks',
+    'api',
+]
+
+INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -155,7 +159,7 @@ CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TIMEZONE = TIME_ZONE
 
 
-# Cacheing
+# Caching
 CACHES = {
     'default': {
         'BACKEND': 'django_redis.cache.RedisCache',

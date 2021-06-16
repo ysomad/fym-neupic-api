@@ -8,7 +8,7 @@ services:
     volumes: 
       - postgres_data:/var/lib/postgresql/data
     env_file:
-      - ./.env.dev
+      - ./docker/dev/.env
     ports:
       - 5432:5432
 
@@ -18,14 +18,14 @@ services:
       context: .
       dockerfile: ./docker/dev/django/Dockerfile
     command: >
-      sh -c "python manage.py migrate &&
+      sh -c "cd app && python manage.py migrate &&
              python manage.py runserver 0.0.0.0:8000"
     ports:
       - 8000:8000
     volumes:
       - .:/usr/src/app
     env_file:
-      - ./.env.dev
+      - ./docker/dev/.env
     image: django-image
     depends_on:
       - postgres
@@ -41,11 +41,12 @@ services:
     build: 
       context: .
       dockerfile: ./docker/dev/django/Dockerfile
-    command: celery -A config worker --loglevel=INFO
+    command: >
+      sh -c "cd app && celery -A config worker --loglevel=INFO"
     volumes:
       - .:/usr/src/app
     env_file:
-      - ./.env.dev
+      - ./docker/dev/.env
     depends_on:
       - django
       - redis

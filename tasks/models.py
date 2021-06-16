@@ -63,6 +63,7 @@ class Task(models.Model):
         PROCESSING = 'processing'
         DONE = 'done'
         ERROR = 'error'
+        CANCELED = 'canceled'
 
     media = models.ManyToManyField(Media)
     function = models.ForeignKey(

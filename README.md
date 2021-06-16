@@ -21,7 +21,6 @@ $ docker-compose -f docker-compose.prod.yml build
 $ docker-compose -f docker-compose.prod.yml up -d
 ```
 4. Create super user, collectstatic and makemigrations for JWT tokens
-Connect to django container
 ```bash
 $ docker exec -ti django sh
 $ /usr/src/app/: python manage.py collectstatic

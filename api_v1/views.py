@@ -1,3 +1,6 @@
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import cache_page
+
 from rest_framework.response import Response
 from rest_framework.generics import ListAPIView, ListCreateAPIView
 from rest_framework.viewsets import ModelViewSet
@@ -52,6 +55,10 @@ class MediaViewSet(ModelViewSet):
     filterset_fields = ['tags__name', 'type'] 
     permission_classes = get_permission_classes()
 
+    @method_decorator(cache_page(60*60))
+    def list(self, *args, **kwargs):
+        return super(MediaViewSet, self).list(*args, **kwargs)
+
 
 class AppFunctionList(ListAPIView):
     queryset = AppFunction.objects.all()
@@ -101,5 +108,9 @@ class TagList(ListAPIView):
     queryset = Tag.objects.all()
     serializer_class = TagSerializer
     permission_classes = get_permission_classes()
+
+    @method_decorator(cache_page(60*60))
+    def get(self, request, *args, **kwargs):
+        return self.list(request, *args, **kwargs)
 
  

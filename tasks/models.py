@@ -6,7 +6,7 @@ from taggit.managers import TaggableManager
 class Config(models.Model):
     """
     Config model for storing development and production
-    settings for Neupic application
+    settings for main application
     """
 
     class Type(models.TextChoices):
@@ -80,7 +80,7 @@ class Task(models.Model):
         'Bot', 
         blank=True, 
         null=True, 
-        verbose_name='bot name',
+        verbose_name='bot',
         on_delete=models.CASCADE
     ) 
     status = models.CharField(
@@ -97,8 +97,8 @@ class Task(models.Model):
 
 class AppFunction(models.Model):
     """
-    Model for storing application functions with which the 
-    bot should process media, every function bind to specific
+    Model for storing application functions with which bots 
+    should process media, every function bind to specific
     application
     """
 

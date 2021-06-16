@@ -1,6 +1,18 @@
-# fym-neupic-queue
+# FYM bot tasks manager
+API for managing bot tasks
 
-## Development
+## Short description
+In main application users creating tasks which contains function, subfunction and media which needed to be processed.
+Bots are located on different independent backends and every bot processing media in different applications which
+has different functions and subfunctions. 
+1. Just after the task has been created, it's tied to a specific bot that is least loaded
+2. Bot takes the task in work, sets it a status 'processing'
+3. After processing sets it a status 'done' and uploading processed media and bind it to the task
+4. Client downloads processed media from task
+
+## Usage
+
+### Development
 1. Build docker image
 ```bash
 $ docker-compose build

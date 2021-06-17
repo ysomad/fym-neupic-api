@@ -184,6 +184,7 @@ SLIDING_TOKEN_REFRESH_LIFETIME = timedelta(weeks=4)
 DRF_API_LOGGER_DATABASE = True
 DRF_LOGGER_QUEUE_MAX_SIZE = 10000 # store 10000 request logs before inserting to database
 DRF_LOGGER_INTERVAL = 300 # if queue is not full insert logs after 5 minutes
+DRF_API_LOGGER_EXCLUDE_KEYS = ['password', 'token', 'access', 'refresh']
 
 
 # deploy

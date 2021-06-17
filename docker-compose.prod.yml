@@ -11,7 +11,7 @@ services:
     volumes: 
       - postgres_data:/var/lib/postgresql/data
     env_file:
-      - .env.prod
+      - ./docker/prod/.env
     ports:
       - 5432:5432
 
@@ -24,14 +24,14 @@ services:
     command: >
       sh -c "python manage.py migrate &&
              gunicorn -w 5 config.wsgi -b 0.0.0.0:8000"
-    expose: 
-      - 8000
+    ports: 
+      - 8000:8000
     volumes:
-      - .:/usr/src/app
-      - ./static:/static
-      - ./media:/media
+      - ./app:/usr/src/app
+      - ./app/static:/static
+      - ./app/media:/media
     env_file:
-      - .env.prod
+      - ./docker/prod/.env
     depends_on:
       - postgres
       - redis
@@ -49,9 +49,9 @@ services:
       dockerfile: ./docker/prod/django/Dockerfile
     command: celery -A config worker --loglevel=INFO
     volumes:
-      - .:/usr/src/app
+      - ./app:/usr/src/app
     env_file:
-      - .env.prod
+      - ./docker/prod/.env
     depends_on:
       - django
       - redis
@@ -63,8 +63,8 @@ services:
       context: .
       dockerfile: ./docker/prod/nginx/Dockerfile
     volumes: 
-      - ./static:/static
-      - ./media:/media
+      - ./app/static:/static
+      - ./app/media:/media
     ports: 
       - 80:80
       - 443:443

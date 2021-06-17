@@ -180,6 +180,12 @@ SLIDING_TOKEN_LIFETIME = timedelta(days=1)
 SLIDING_TOKEN_REFRESH_LIFETIME = timedelta(weeks=4)
 
 
+# DRF logging
+DRF_API_LOGGER_DATABASE = True
+DRF_LOGGER_QUEUE_MAX_SIZE = 10000 # store 10000 request logs before inserting to database
+DRF_LOGGER_INTERVAL = 300 # if queue is not full insert logs after 5 minutes
+
+
 # deploy
 # if not DEBUG:
 #     SECURE_SSL_REDIRECT=True
@@ -191,6 +197,5 @@ SLIDING_TOKEN_REFRESH_LIFETIME = timedelta(weeks=4)
 #     SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 
-# DRF logging
-DRF_API_LOGGER_DATABASE = True
+
 

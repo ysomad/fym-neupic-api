@@ -13,6 +13,7 @@ class Config(models.Model):
         DEV = 'dev'
         PROD = 'prod'
     
+    # TODO: add verbose_name for each field with fine description
     type = models.CharField(max_length=8, choices=Type.choices)
     lock_app_after_function = models.BooleanField()
     lock_app_before_function = models.BooleanField()
@@ -38,10 +39,26 @@ class Media(models.Model):
         TEMPLATE_GIF = 'template_gif'
         TEMPLATE_VID = 'template_video'
 
-    media = models.FileField(upload_to='tasks')
-    preview = models.URLField(max_length=2048, blank=True, null=True)
-    type = models.CharField(max_length=16, choices=Type.choices)
-    tags = TaggableManager(blank=True)
+    media = models.FileField(
+        upload_to='tasks',
+        verbose_name='media which can be gif/vid/img uploaded by user or \
+            using as a template media in main application'
+    )
+    preview = models.URLField(
+        max_length=2048, 
+        blank=True,
+        null=True, 
+        verbose_name='URL to media preview'
+    )
+    type = models.CharField(
+        max_length=16, 
+        choices=Type.choices,
+        verbose_name='type of media'
+    )
+    tags = TaggableManager(
+        blank=True, 
+        verbose_name='tags which is needed for media search'
+    )
     uploaded_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
@@ -65,28 +82,34 @@ class Task(models.Model):
         ERROR = 'error'
         CANCELED = 'canceled'
 
-    media = models.ManyToManyField(Media)
+    media = models.ManyToManyField(Media, verbose_name='media URL')
     function = models.ForeignKey(
-        'AppFunction', verbose_name='function', on_delete=models.CASCADE
+        'AppFunction', verbose_name='app function', on_delete=models.CASCADE
     )
     subfunction = models.ForeignKey(
         'Subfunction', 
         null=True,
         blank=True,
-        verbose_name='subfunction', 
+        verbose_name='subfunction of app function', 
         on_delete=models.CASCADE
     )
     bot = models.ForeignKey(
         'Bot', 
         blank=True, 
         null=True, 
-        verbose_name='bot',
+        verbose_name='remote bot',
         on_delete=models.CASCADE
     ) 
     status = models.CharField(
-        max_length=32, blank=True, choices=Status.choices, default=Status.NEW
+        max_length=32, 
+        blank=True, 
+        choices=Status.choices, 
+        default=Status.NEW,
+        verbose_name='task status'
     )
-    created_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(
+        auto_now_add=True, verbose_name='timestamp'
+    )
 
     class Meta:
         db_table = 'task'
@@ -103,9 +126,13 @@ class AppFunction(models.Model):
     """
 
     name = models.CharField(
-        max_length=32, unique=True, verbose_name='function'
+        max_length=32, unique=True, verbose_name='name of function'
     )
-    app = models.ForeignKey('App', on_delete=models.CASCADE)
+    app = models.ForeignKey(
+        'App', 
+        on_delete=models.CASCADE, 
+        verbose_name='application in which bots will process media'
+    )
 
     class Meta:
         db_table = 'app_function'
@@ -120,10 +147,13 @@ class Subfunction(models.Model):
     """
 
     name = models.CharField(
-        max_length=32, unique=True, verbose_name='subfunction'
+        max_length=32, unique=True, verbose_name='name of subfunction'
     )
     function = models.ForeignKey(
-        'AppFunction', null=True, on_delete=models.CASCADE
+        'AppFunction', 
+        null=True, 
+        on_delete=models.CASCADE, 
+        verbose_name='function to which subfunction is bound'
     )
 
     class Meta:
@@ -142,9 +172,14 @@ class Bot(models.Model):
         ENABLED = 'enabled'
         DISABLED = 'disabled'
 
-    name = models.CharField(max_length=32, unique=True)
+    name = models.CharField(
+        max_length=32, unique=True, verbose_name='bot name'
+    )
     state = models.CharField(
-        max_length=8, choices=State.choices, default=State.DISABLED
+        max_length=8, 
+        choices=State.choices, 
+        default=State.DISABLED, 
+        verbose_name='bot state'
     )
 
     class Meta:
@@ -159,7 +194,9 @@ class App(models.Model):
     Model for storing application names
     """
 
-    name = models.CharField(max_length=32, unique=True)
+    name = models.CharField(
+        max_length=32, unique=True, verbose_name='application name'
+    )
 
     class Meta:
         db_table = 'app'

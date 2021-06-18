@@ -1,4 +1,62 @@
-from .models import Task, Bot, Media
+from .models import App, Task, Bot, Media, Config, AppFunction, Subfunction
+from taggit.models import Tag
+
+
+def get_all_tags():
+    """
+    Returns QuerySet of all django-taggit tags
+    """
+    return Tag.objects.all()
+
+
+def get_all_applications():
+    """
+    Returns QuerySet of all applications
+    """
+    return App.objects.all()
+
+
+def get_all_bots():
+    """
+    Returns QuerySet of all subfunctions
+    """ 
+    return Bot.objects.all()
+
+
+def get_all_subfunctions():
+    """
+    Returns QuerySet of all subfunctions
+    """
+    return Subfunction.objects.all()
+
+
+def get_all_functions():
+    """
+    Returns QuerySet of all application functions
+    """
+    return AppFunction.objects.all()
+
+
+def get_all_media():
+    """
+    Returns QuerySet of all media
+    """
+    return Media.objects.all()
+
+
+def get_all_tasks():
+    """
+    Returns QuerySet of all tasks
+    """
+    return Task.objects.all()
+
+
+
+def get_all_configs():
+    """
+    Returns QuerySet of all configs
+    """
+    return Config.objects.all()
 
 
 def get_new_tasks():

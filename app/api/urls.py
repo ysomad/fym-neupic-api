@@ -10,7 +10,7 @@ from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 
 from .views import (MediaViewSet, TaskViewSet, AppFunctionList, 
-    SubfunctionList, BotViewSet, AppList, TagList, ConfigListCreateAPIView)
+    SubfunctionList, BotViewSet, AppList, TagList, ConfigViewSet)
 
 
 schema_view = get_schema_view(
@@ -30,6 +30,7 @@ router = DefaultRouter()
 router.register(r'tasks', TaskViewSet)
 router.register(r'media', MediaViewSet)
 router.register(r'bots', BotViewSet)
+router.register(r'configs', ConfigViewSet)
 
 urlpatterns = [
     # Router
@@ -52,7 +53,6 @@ urlpatterns = [
     path('subfunctions/', SubfunctionList.as_view(), name='subfunction_list'),
     path('apps/', AppList.as_view(), name='app_list'),
     path('tags/', TagList.as_view(), name='tag_list'),
-    path('configs/', ConfigListCreateAPIView.as_view(), name='config_list'),
 ]
 
 

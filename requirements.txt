@@ -10,9 +10,9 @@ billiard==3.6.4.0; python_version >= "3.6" \
 bleach==3.3.0; python_version >= "3.6" and python_full_version < "3.0.0" or python_full_version >= "3.5.0" and python_version >= "3.6" \
     --hash=sha256:6123ddc1052673e52bab52cdc955bcb57a015264a1c57d37bea2f6b817af0125 \
     --hash=sha256:98b3170739e5e83dd9dc19633f074727ad848cbedb6026708c8ac2d3b697a433
-celery==5.1.0; python_version >= "3.6" \
-    --hash=sha256:1329de1edeaf734ef859e630cb42df2c116d53e59d2f46433b13aed196e85620 \
-    --hash=sha256:65f061c04578cf189cd7352c192e1a79fdeb370b916bff792bcc769560e81184
+celery==5.1.1; python_version >= "3.6" \
+    --hash=sha256:b5399d76cf70d5cfac3ec993f8796ec1aa90d4cef55972295751f384758a80d7 \
+    --hash=sha256:54436cd97b031bf2e08064223240e2a83d601d9414bcb1b702f94c6c33c29485
 certifi==2020.12.5; python_version >= "3.6" and python_full_version < "3.0.0" or python_full_version >= "3.5.0" and python_version >= "3.6" \
     --hash=sha256:719a74fb9e33b9bd44cc7f3a8d94bc35e4049deebe19ba7d8e108280cfd59830 \
     --hash=sha256:1a4995114262bffbc2413b159f2a1a480c969de6e6eb13ee966d470af86af59c
@@ -243,6 +243,9 @@ ruamel.yaml.clib==0.2.2; platform_python_implementation == "CPython" and python_
 ruamel.yaml==0.17.4; python_version >= "3.6" \
     --hash=sha256:ac79fb25f5476e8e9ed1c53b8a2286d2c3f5dde49eb37dbcee5c7eb6a8415a22 \
     --hash=sha256:44bc6b54fddd45e4bc0619059196679f9e8b79c027f4131bb072e6a22f4d5e28
+sentry-sdk==1.1.0 \
+    --hash=sha256:c1227d38dca315ba35182373f129c3e2722e8ed999e52584e6aca7d287870739 \
+    --hash=sha256:c7d380a21281e15be3d9f67a3c4fbb4f800c481d88ff8d8931f39486dd7b4ada
 six==1.16.0; python_version >= "3.6" and python_full_version < "3.0.0" or python_full_version >= "3.5.0" and python_version >= "3.6" \
     --hash=sha256:8abb2f1d86890a2dfb989f9a77cfcfd3e47c2a354b01111771326f8aa26e0254 \
     --hash=sha256:1e61c37477a1626458e36f7b1d82aa5c9b094fa4802892072e49de9c60c4c926

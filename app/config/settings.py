@@ -2,6 +2,9 @@ import os
 from pathlib import Path
 from datetime import timedelta
 
+import sentry_sdk
+from sentry_sdk.integrations.django import DjangoIntegration
+
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -198,5 +201,11 @@ DRF_API_LOGGER_EXCLUDE_KEYS = ['password', 'token', 'access', 'refresh']
 #     SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 
-
-
+# Sentry
+SENTRY_DSN = os.environ.get('SENTRY_DSN')
+sentry_sdk.init(
+    dsn=SENTRY_DSN,
+    integrations=[DjangoIntegration()],
+    traces_sample_rate=1.0,
+    send_default_pii=True
+)

@@ -198,3 +198,7 @@ sentry_sdk.init(
     traces_sample_rate=1.0,
     send_default_pii=True
 )
+
+# Admin
+ADMIN_ENDPOINT = 'APNfN9edcStGiVl4Bdf0dsooIDraJfXOM2f9DDjrdxlEJgsQRSJ19xjY64hvodCPNwORDoYRxPdq8L3zunFg3GjNF2EISLXcUDQgqumcYntfdquBOFUr7NV8cyZQrJfELlXlUswh8eKpHzlZQVhJhnIKIzeqhdAxcGaprAiFjpOSlRmngZBRryYHGRuFhWgYMbxFIw4B'
+

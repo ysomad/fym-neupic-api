@@ -5,9 +5,9 @@ API for managing bot tasks
 In main application users creating tasks which contains function, subfunction and media which needed to be processed.
 Bots are located on different independent backends and every bot processing media in different applications which
 has different functions and subfunctions. 
-1. Just after the task has been created, it's tied to a specific bot that is least loaded
-2. Bot takes the task in work, sets it a status 'processing'
-3. After processing sets it a status 'done' and uploading processed media and bind it to the task
+1. After a task has been created, Celery assigns the newly created task to bot, which is least loaded
+2. Bot starts processing media from the task and changes the task status to "processing"
+3. After a bot finishes processing, it uploads media to server, sets task status to "done" and attaches processed media to the task
 4. Client downloads processed media from task
 
 ## Usage

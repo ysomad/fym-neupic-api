@@ -32,7 +32,6 @@ THIRD_PARTY_APPS = [
     'taggit',
     'taggit_serializer',
     'django_cleanup.apps.CleanupConfig',
-    'drf_api_logger',
 ]
 
 LOCAL_APPS = [
@@ -50,9 +49,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    
-    # Third party
-    'drf_api_logger.middleware.api_logger_middleware.APILoggerMiddleware',
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -181,13 +177,6 @@ TAGGIT_CASE_INSENSITIVE = True
 # SimpleJWT
 SLIDING_TOKEN_LIFETIME = timedelta(days=1)
 SLIDING_TOKEN_REFRESH_LIFETIME = timedelta(weeks=4)
-
-
-# DRF logging
-DRF_API_LOGGER_DATABASE = True
-DRF_LOGGER_QUEUE_MAX_SIZE = 10000 # store 10000 request logs before inserting to database
-DRF_LOGGER_INTERVAL = 300 # if queue is not full insert logs after 5 minutes
-DRF_API_LOGGER_EXCLUDE_KEYS = ['password', 'token', 'access', 'refresh']
 
 
 # deploy

@@ -4,6 +4,7 @@ from datetime import timedelta
 
 import sentry_sdk
 from sentry_sdk.integrations.django import DjangoIntegration
+from sentry_sdk.integrations.redis import RedisIntegration
 
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -194,7 +195,7 @@ SLIDING_TOKEN_REFRESH_LIFETIME = timedelta(weeks=4)
 SENTRY_DSN = os.environ.get('SENTRY_DSN')
 sentry_sdk.init(
     dsn=SENTRY_DSN,
-    integrations=[DjangoIntegration()],
+    integrations=[DjangoIntegration(), RedisIntegration()],
     traces_sample_rate=1.0,
     send_default_pii=True
 )

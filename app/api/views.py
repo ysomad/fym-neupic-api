@@ -17,6 +17,7 @@ from .serializers import (AppFunctionSerializer, BotSerializer, MediaSerializer,
 from .services import (get_bot_tasks_by_status, 
     get_permission_classes, retrieve_task_details, create_new_task, 
     delete_all_bot_tasks)
+from .pagination import MediaPagination
 
 from tasks.models import Task
 from tasks.managers import (get_all_configs, get_all_tasks,
@@ -51,6 +52,7 @@ class MediaViewSet(ModelViewSet):
     serializer_class = MediaSerializer
     filterset_fields = ['tags__name', 'type'] 
     permission_classes = get_permission_classes()
+    pagination_class = MediaPagination
 
     @method_decorator(cache_page(60*60))
     def list(self, *args, **kwargs):

@@ -31,6 +31,7 @@ class ConfigViewSet(CreateModelMixin,
                     GenericViewSet):
     queryset = get_all_configs()
     serializer_class = ConfigSerializer
+    permission_classes = get_permission_classes()
 
 
 class TaskViewSet(ModelViewSet):

@@ -201,5 +201,4 @@ sentry_sdk.init(
 )
 
 # Admin
-ADMIN_ENDPOINT = 'APNfN9edcStGiVl4Bdf0dsooIDraJfXOM2f9DDjrdxlEJgsQRSJ19xjY64hvodCPNwORDoYRxPdq8L3zunFg3GjNF2EISLXcUDQgqumcYntfdquBOFUr7NV8cyZQrJfELlXlUswh8eKpHzlZQVhJhnIKIzeqhdAxcGaprAiFjpOSlRmngZBRryYHGRuFhWgYMbxFIw4B'
-
+ADMIN_ENDPOINT = os.environ.get('DJANGO_ADMIN_ENDPOINT', 'admin')

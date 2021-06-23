@@ -9,3 +9,4 @@ media/
 .idea/
 static
 staticfiles
+neupic_api.conf

@@ -23,7 +23,7 @@ $ docker-compose up -d
 ```
 
 ### Production
-1. Create and fill in `.env.prod` with db credentials
+1. Create and fill in `.env` with db credentials in ```docker/prod/``` directory
 2. Build production docker compose
 ```bash
 $ docker-compose -f docker-compose.prod.yml build

@@ -36,7 +36,7 @@ $ docker-compose -f docker-compose.prod.yml up -d
 ```bash
 $ docker exec -ti django sh
 $ /usr/src/app/: python manage.py collectstatic
-$ /usr/src/app/: python manage.py createsuperuser
 $ /usr/src/app/: python manage.py makemigrations
 $ /usr/src/app/: python manage.py migrate
+$ /usr/src/app/: python manage.py createsuperuser
 ```
